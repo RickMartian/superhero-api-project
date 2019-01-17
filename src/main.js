@@ -12,13 +12,28 @@ class App {
 
         this.activeMenu();
         this.activeButton();
+        this.addEnterEvent();
+    }
+
+    addEnterEvent() {
+        this.inputEl.addEventListener('keypress', (e) => {
+            let key = e.which || e.keyCode;
+
+            if(key === 13) {
+                this.getInput();
+            }
+        });
     }
 
     activeMenu() {
 
-        this.liEl.forEach((element) => {
+        this.liEl.forEach((element, index) => {
 
             element.onclick = () => {
+
+                if(index === 0) {
+                    this.heroBoxEl.innerHTML = '';
+                }
 
                 for(let i = 0; i < this.liEl.length; i++) {
                     this.liEl[i].removeAttribute('class', 'active');
@@ -29,16 +44,19 @@ class App {
         });
     }
 
+    getInput() {
+        if(this.inputEl.value !== '' && this.inputEl.value !== undefined) {
+
+            this.hero = [];
+            this.searchHero(this.inputEl.value);
+        }
+        this.inputEl.value = '';
+    }
+
     activeButton() {
 
         this.buttonEl.onclick = () => {
-            if(this.inputEl.value !== '' && this.inputEl.value !== undefined) {
-
-            this.hero = [];
-            console.log(this.inputEl.value);
-            this.searchHero(this.inputEl.value);
-            }
-            this.inputEl.value = '';
+            this.getInput();
         }
     }
 
@@ -80,8 +98,6 @@ class App {
 
         try {
             const response = await api.get(`search/${hero}`);
-
-            console.log(response.data.results);
 
             if(this.verifyResponse(response.data)) {
 
