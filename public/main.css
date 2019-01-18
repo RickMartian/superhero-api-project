@@ -29,7 +29,7 @@ header ul li a {
     padding: 14px 25px;
 }
 
-header ul li a:hover {
+header ul li a:hover:not(.active) {
     background-color: #111;
 }
 
@@ -80,6 +80,10 @@ header button:hover {
     }
 }
 
+.heroes-container {
+    height: 900px;
+}
+
 .heroes {
     margin: 1%;
 }
@@ -94,14 +98,40 @@ div .polaroid {
 }
 
 div .container {
+    float: inherit;
     font-size: 80%;
     text-align: center;
     margin-top: -8px;
     padding: 0px 5px;
 }
 
+.pagination-container {
+    clear: both;
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+    z-index: 1;
+    margin-bottom: 10px;
+}
+
+.pagination a {
+    font-family: sans-serif;
+    color: #111;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+} 
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
 footer {
-    margin-top: 1000px;
+    /* margin-top:1000px; */
     color: white;
     background-color: #333;
     padding: 14px 16px;
