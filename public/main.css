@@ -81,7 +81,7 @@ header button:hover {
 }
 
 .heroes-container {
-    height: 900px;
+    height: 650px;
 }
 
 .heroes {
@@ -131,7 +131,6 @@ div .container {
 .pagination a:hover:not(.active) {background-color: #ddd;}
 
 footer {
-    /* margin-top:1000px; */
     color: white;
     background-color: #333;
     padding: 14px 16px;

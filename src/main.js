@@ -13,7 +13,7 @@ class App {
         this.liEl = document.querySelectorAll('header ul li a');
         this.inputEl = document.querySelector('header input[type=text]');
         this.buttonEl = document.querySelector('header button');
-        this.containerHeroBoxEl = document.querySelector('.heroes-container');
+        this.containerHeroBoxEl = document.querySelector('#heroes-container');
         this.paginationEl = document.querySelector('#pagination');
 
         this.activeMenu();
@@ -59,7 +59,7 @@ class App {
 
             if(this.inputText === '') {
 
-                this.this.containerHeroBoxEl.innerHTML = '';
+                this.containerHeroBoxEl.innerHTML = '';
                 this.paginationEl.innerHTML = '';
             }
 
