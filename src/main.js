@@ -4,6 +4,7 @@ class App {
     constructor() {
 
         this.hero = [];
+        this.inputText = "";
 
         this.liEl = document.querySelectorAll('header ul li a');
         this.inputEl = document.querySelector('header input[type=text]');
@@ -12,16 +13,63 @@ class App {
 
         this.activeMenu();
         this.activeButton();
-        this.addEnterEvent();
+        this.addEvent();
     }
 
-    addEnterEvent() {
-        this.inputEl.addEventListener('keypress', (e) => {
+    verifyLetters(letter) {
+        let letters = /^[a-zA-Z]+$/;
+
+        if(letter.match(letters) && letter.length === 1) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
+
+    }
+
+    doneTyping () {
+        this.getInput();
+    }
+
+    addEvent() {
+        let typingTimer;
+        let doneTypingInterval = 500;
+
+        this.inputEl.addEventListener('keyup', (e) => {
             let key = e.which || e.keyCode;
 
-            if(key === 13) {
-                this.getInput();
+            clearTimeout(typingTimer);
+
+            if(this.verifyLetters(e.key)) {
+
+                 this.inputText = this.inputEl.value;
+
             }
+
+            if(e.key === "Backspace") {
+                this.inputText = this.inputEl.value;
+            }
+
+            if(this.inputText === '')
+                this.heroBoxEl.innerHTML = '';
+
+            console.log('InputText', this.inputText);
+
+            if(this.inputText) {
+
+                console.log('Entrou');
+                typingTimer = setTimeout(() => {
+                    this.doneTyping();
+                }, doneTypingInterval);
+            }
+                
+            if(key === 13) {
+                this.inputText = '';
+                this.inputEl.value = '';
+            }
+
         });
     }
 
@@ -45,12 +93,14 @@ class App {
     }
 
     getInput() {
-        if(this.inputEl.value !== '' && this.inputEl.value !== undefined) {
 
-            this.hero = [];
-            this.searchHero(this.inputEl.value);
+        this.hero = [];
+
+        if(this.inputText !== '' && this.inputText !== undefined) {
+
+            this.searchHero(this.inputText);
         }
-        this.inputEl.value = '';
+        
     }
 
     activeButton() {
@@ -61,6 +111,12 @@ class App {
     }
 
     verifyResponse(response) {
+
+        if(response == '') {
+            return false;
+        }
+            
+
         if(response.response === "success") {
              return true;
         }
@@ -104,6 +160,7 @@ class App {
                 this.getHero(response.data.results);
 
                 this.render();
+
             }
                 
 
@@ -115,6 +172,8 @@ class App {
     }
 
     getHero(heroes) {
+
+        this.hero = [];
 
         heroes.forEach((hero, index) => {
 
@@ -138,6 +197,8 @@ class App {
 
     render() {
 
+        console.log(this.hero);
+
         this.hero.forEach(hero => {
             const boxEl = document.createElement('div');
             boxEl.setAttribute('class', 'polaroid');
@@ -159,6 +220,7 @@ class App {
             this.heroBoxEl.appendChild(boxEl);
 
         });
+
     }
 
 }
